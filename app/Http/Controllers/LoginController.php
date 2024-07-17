@@ -17,7 +17,7 @@ class LoginController extends Controller
             return view('login');
         }
 
-        return redirect()->route('tasks.list');
+        return redirect()->route('task.index');
     }
 
     public function store(Request $request)
@@ -49,7 +49,7 @@ class LoginController extends Controller
         if (Auth::attempt($validated, $remember)) {
 
             $request->session()->regenerate();
-            return redirect()->intended(route('tasks.list'));
+            return redirect()->intended(route('task.index'));
         }
 
         redirect()->back(400);

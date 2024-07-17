@@ -1,7 +1,7 @@
 <x-layout>
     <div class="w-full mx-auto h-[calc(100svh-48px)] flex items-center justify-center">
 
-        <div class="rounded-md border shadow-md px-5 py-3 w-[32rem]" >
+        <div class="rounded-md border shadow-md px-5 py-3 w-[32rem] bg-white" >
             @if (session('state'))
                 <div class="px-5 py-2 rounded-lg bg-blue-300 shadow-md flex items-center space-x-5 my-3"><svg
                         xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">

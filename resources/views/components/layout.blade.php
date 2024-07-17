@@ -19,26 +19,34 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
-    <header class="border-b h-12">
-        <div class="px-4 py-2 h-full container mx-auto">
-            @auth
-                <div class="flex justify-between items-center">
-                    <a href="{{ route('tasks.list') }}">Tareas</a>
+<body class="bg-gray-50">
+    <header class="h-12 max-h-12 bg-white border-b overflow-hidden shadow-lg">
 
-                    <div class="space-x-2 flex items-center">
-                        <a href="#" class=""> @auth
-                                {{ Auth::user()->name }}
-                            @endauth </a>
-                        <a href="{{ route('logout') }}" class="px-2 py-1 rounded-md bg-black text-white">Salir</a>
+        <div class="h-full w-full px-6 container mx-auto flex items-center justify-between">
+            <div>
+                <span class="font-semibold text-2xl">TareApp</span>
+            </div>
+
+            <div class="w-1/2">
+                @auth
+
+                    <div class="flex justify-between items-center">
+                        <a href="{{ route('task.index') }}">Tareas</a>
+
+                        <div class="space-x-2 flex items-center">
+                            <a href="#" class=""> @auth
+                                    {{ Auth::user()->name }}
+                                @endauth </a>
+                            <a href="{{ route('logout') }}" class="px-2 py-1 rounded-md bg-black text-white">Salir</a>
+                        </div>
                     </div>
-                </div>
-            @else
-                <div class="flex flex-row-reverse gap-2 items-center">
-                    <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('signup') }}" class="px-2 py-1 rounded-lg bg-black text-white">Registro</a>
-                </div>
-            @endauth
+                @else
+                    <div class="flex gap-2 items-center justify-end ">
+                        <a href="{{ route('login') }}" class="px-2 py-1 rounded-lg border-[2px]">Login</a>
+                        <a href="{{ route('signup') }}" class="px-2 py-1 rounded-lg bg-black text-white">Registro</a>
+                    </div>
+                @endauth
+            </div>
         </div>
     </header>
 
