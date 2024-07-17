@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+a{
+    color: hsl(207, 70%, 47%);
+}
