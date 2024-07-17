@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use User;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -31,12 +31,15 @@ class LoginController extends Controller
     {
         $val = $request->validate([
             'email' => 'required|email',
-            'password'=> 'required|min:8|string',
+            'password' => 'required|min:8|string',
             'confirmPassword' => 'required|same:password',
             'name' => 'string|max:200|required',
         ]);
 
-        return request();
+        // return request();
+
+        $usuario = User::create($val);
+        return $usuario;
         // return response(['nombre' => 'El nombre para ver']);
     }
 

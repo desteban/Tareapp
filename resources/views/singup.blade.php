@@ -4,37 +4,33 @@
             @csrf
             <h1 class="mb-7 text-3xl font-semibold">Formulario</h1>
 
-            <div class="mb-4">
-                <label class="flex flex-col space-y-3">
-                    Nombre
-                    <input class="px-1 py-1 rounded-md border-[2px]" type="text" id="name" name="name"
-                        placeholder="Nombre" value="{{ old('name') }}">
-                </label>
+            <x-input name="name" label="Nombre" placeholder="Nombre" value="{{ old('name') }}"
+                required="{{ true }}">
                 @error('name')
-                    <span class="text-sm text-red-600">{{ $message }}</span>
+                    <x-error-input>{{ $message }}</x-error-input>
                 @enderror
-            </div>
+            </x-input>
 
-            <div class="mb-4">
-                <label class="flex flex-col space-y-3">
-                    Correo
-                    <input class="px-1 py-1 rounded-md border-[2px]" type="email" id="email" name="email"
-                        placeholder="mail@mail.com" value="{{ old('email') }}">
-                </label>
+            <x-input type="email" id="email" name="email" placeholder="mail@mail.com" label="Correo"
+                value="{{ old('email') }}" required="{{ true }}">
                 @error('email')
-                    <span class="text-sm text-red-600">{{ $message }}</span>
+                    <x-error-input>{{ $message }}</x-error-input>
                 @enderror
-            </div>
+            </x-input>
 
-            <div class="mb-4">
-                <label class="flex flex-col space-y-3">
-                    Contraseña
-                    <input class="px-1 py-1 rounded-md border-[2px]" type="password" name="password" id="password">
-                </label>
+            <x-input type="password" name="password" id="password" label="Contraseña" required="{{ true }}"
+                value="{{ old('password') }}">
                 @error('password')
-                    <span class="text-sm text-red-600">{{ $message }}</span>
+                    <x-error-input>{{ $message }}</x-error-input>
                 @enderror
-            </div>
+            </x-input>
+
+            <x-input type="password" name="confirmPassword" id="confirmPassword" label="Confirmar contraseña"
+                required="{{ true }}">
+                @error('confirmPassword')
+                    <x-error-input>{{ $message }}</x-error-input>
+                @enderror
+            </x-input>
 
             <button type="submit" class="bg-black text-white px-4 py-2 rounded-md w-full">Registrar</button>
         </form>
