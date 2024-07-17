@@ -20,15 +20,26 @@
 </head>
 
 <body>
-    <header class="px-4 py-2 border-b">
-        @auth
-            <a href="/">Tareas</a>
-        @else
-            <div class="flex space-x-2 items-center">
-                <a href="{{ route('login') }}">Login</a>
-                <a href="{{ route('signup') }}">Registro</a>
-            </div>
-        @endauth
+    <header class="border-b h-12">
+        <div class="px-4 py-2 h-full container mx-auto">
+            @auth
+                <div class="flex justify-between items-center">
+                    <a href="{{ route('tasks.list') }}">Tareas</a>
+
+                    <div class="space-x-2 flex items-center">
+                        <a href="#" class=""> @auth
+                                {{ Auth::user()->name }}
+                            @endauth </a>
+                        <a href="{{ route('logout') }}" class="px-2 py-1 rounded-md bg-black text-white">Salir</a>
+                    </div>
+                </div>
+            @else
+                <div class="flex flex-row-reverse gap-2 items-center">
+                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('signup') }}" class="px-2 py-1 rounded-lg bg-black text-white">Registro</a>
+                </div>
+            @endauth
+        </div>
     </header>
 
     <main>
