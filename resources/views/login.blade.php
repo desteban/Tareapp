@@ -1,4 +1,4 @@
-<x-layout title="Signup">
+<x-layout>
     <div class="max-w-lg mx-auto my-6 px-4 py-2 border rounded-lg shadow-md">
 
 
@@ -22,16 +22,9 @@
             </div>
         @endif
 
-        <form class="border-b pb-3" action="{{ route('signup.store') }}" method="POST">
+        <form class="border-b pb-3" action="{{ route('login.init') }}" method="POST">
             @csrf
-            <h1 class="mb-7 text-3xl font-semibold">Formulario</h1>
-
-            <x-input name="name" label="Nombre" placeholder="Nombre" value="{{ old('name') }}"
-                required="{{ true }}">
-                @error('name')
-                    <x-error-input>{{ $message }}</x-error-input>
-                @enderror
-            </x-input>
+            <h1 class="mb-7 text-3xl font-semibold">Login</h1>
 
             <x-input type="email" id="email" name="email" placeholder="mail@mail.com" label="Correo"
                 value="{{ old('email') }}" required="{{ true }}">
@@ -47,20 +40,16 @@
                 @enderror
             </x-input>
 
-            <x-input type="password" name="confirmPassword" id="confirmPassword" label="Confirmar contraseña"
-                required="{{ true }}">
-                @error('confirmPassword')
-                    <x-error-input>{{ $message }}</x-error-input>
-                @enderror
-            </x-input>
+            <label class="mb-4 flex flex-row-reverse w-max gap-2">
+                ¿Mantener sesion iniciada?
+                <input type="checkbox" id="remember" name="remember">
+            </label>
 
-            <x-button-solid type="submit">
-                Registrar
-            </x-button-solid>
+            <button type="submit" class="bg-black text-white px-4 py-2 rounded-md w-full">Registrar</button>
         </form>
 
         <div class="mt-3">
-            <a href="{{ route('login') }}">¿Ya tienes cuenta? Inicia sesión</a>
+            <a href="{{route('signup')}}">¿No tienes cuenta? Crear una</a>
         </div>
     </div>
 </x-layout>

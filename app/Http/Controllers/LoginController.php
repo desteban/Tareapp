@@ -3,75 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+
+    public function loginView(Request $request) {
+        $user = $request->user();
+
+        if (empty($user)) {
+            return view('login');
+        }
+
+        return redirect()->route('tasks.list');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $val = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|string',
             'confirmPassword' => 'required|same:password',
             'name' => 'string|max:200|required',
         ]);
 
-        // return request();
+        try {
+            $usuario = User::create($val);
+            return redirect()->back()->with('state', 'Usuario registrado correctamente.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
 
-        $usuario = User::create($val);
-        return $usuario;
-        // return response(['nombre' => 'El nombre para ver']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function login(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        $remember = $request->has('remember') ? true : false;
+        if (Auth::attempt($validated, $remember)) {
+
+            $request->session()->regenerate();
+            return redirect()->intended(route('tasks.list'));
+        }
+
+        redirect()->back(400);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function logout(Request $request)
     {
-        //
-    }
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect(route('home'));
     }
 }

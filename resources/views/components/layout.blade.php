@@ -25,7 +25,7 @@
             <a href="/">Tareas</a>
         @else
             <div class="flex space-x-2 items-center">
-                <a href="/">Login</a>
+                <a href="{{ route('login') }}">Login</a>
                 <a href="{{ route('signup') }}">Registro</a>
             </div>
         @endauth
