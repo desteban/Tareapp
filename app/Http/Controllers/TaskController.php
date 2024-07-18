@@ -38,7 +38,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|max:255|min:1',
+            'description' => 'required|string',
+            'status' => 'required|in:pendiente,en progreso,completado',
+            'due_date' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($value < now()->format('Y-m-d')) {
+                        $fail('The date must be later than the current date');
+                    }
+                },
+            ],
+        ]);
+
+        $validated['user_id'] = $request->user()->id;
+        $task = Task::create($validated);
+        return $task;
     }
 
     /**
@@ -68,6 +85,15 @@ class TaskController extends Controller
             'title' => 'required|max:255|min:1',
             'description' => 'required|string',
             'status' => 'required|in:pendiente,en progreso,completado',
+            'due_date' => [
+                'required',
+                'date',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($value < now()->format('Y-m-d')) {
+                        $fail('The date must be later than the current date');
+                    }
+                },
+            ],
         ]);
 
         $userId = $request->user()->id;

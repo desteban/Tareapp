@@ -19,7 +19,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-neutral-200">
     <header class="h-12 max-h-12 bg-white border-b overflow-hidden shadow-lg">
 
         <div class="h-full w-full px-6 container mx-auto flex items-center justify-between">

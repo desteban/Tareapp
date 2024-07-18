@@ -1,11 +1,11 @@
-<x-layout title="{{ $task->title ?? '' }}">
-    <article aria-label="Tarea {{ $task->title }}"
-        class="w-full mx-auto h-[calc(100svh-48px)] flex items-center justify-center">
+<x-layout title="Nueva tarea">
+    <article class="w-full mx-auto h-[calc(100svh-48px)] flex items-center justify-center">
 
-        <form class="px-5 py-3 rounded-md border shadow-md border-b bg-white"
-            action="{{ route('task.update', ['task' => $task->id]) }}" method="POST">
-            @method('PUT')
+        <form class="px-5 py-3 rounded-md border shadow-md border-b bg-white" action="{{ route('task.store') }}"
+            method="POST">
             @csrf
+
+            <h1 class="text-3xl font-semibold">Crea tu tarea</h1>
 
             @isset($state)
                 <div class="px-5 py-2 rounded-lg bg-blue-300 shadow-md flex gap-2 items-center my-5">
@@ -20,8 +20,7 @@
                 </div>
             @endisset
 
-            <x-input id="tittle" name="title" placeholder="Titulo" label="Titulo"
-                value="{{ old('title') ?? $task->title }}">
+            <x-input id="tittle" name="title" placeholder="Titulo" label="Titulo" value="{{ old('title') }}">
                 @error('title')
                     <x-error-input>{{ $message }}</x-error-input>
                 @enderror
@@ -30,10 +29,10 @@
             <div class="mb-4">
                 <label>
                     Estado
-                    <select id="status" name="status">
-                        <option value="pendiente" @selected($task->status === 'pendiente')>Pendiente</option>
-                        <option value="en progreso" @selected($task->status === 'en progreso')>En Proceso</option>
-                        <option value="completado" @selected($task->status === 'completado')>Finalizado</option>
+                    <select id="status" name="status" class="">
+                        <option value="pendiente">Pendiente</option>
+                        <option value="en progreso">En Proceso</option>
+                        <option value="completado">Finalizado</option>
                     </select>
                 </label>
 
@@ -45,7 +44,7 @@
             <div class="mb-4">
                 <x-text-area id="description" name="description" placeholder="Descripcion de la tarea"
                     label="Descripcion">
-                    {{ old('description') ?? $task->description }}
+                    {{ old('description') ?? '' }}
                 </x-text-area>
 
                 @error('description')
@@ -57,7 +56,7 @@
                 <label class="flex flex-col space-y-3">
                     Fecha limite
                     <input class="px-1 py-1 rounded-md border-[2px]" type="date" name="due_date" id="due_date"
-                        min="{{ date('Y-m-d') }}" value="{{ old('due_date') ?? $task->due_date}}">
+                        min="{{ date('Y-m-d') }}" value="{{ old('due_date') ?? ''}}">
                 </label>
 
                 @error('due_date')
@@ -65,7 +64,7 @@
                 @enderror
             </div>
 
-            <x-button-solid type="submit">Actualizar</x-button-solid>
+            <x-button-solid type="submit">Agregar</x-button-solid>
 
             <div class="mt-3">
                 <a href="{{ route('task.index') }}">Volver a las tareas.</a>
