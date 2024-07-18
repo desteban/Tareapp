@@ -55,7 +55,8 @@ class TaskController extends Controller
 
         $validated['user_id'] = $request->user()->id;
         $task = Task::create($validated);
-        return $task;
+
+        return redirect()->route('task.index')->with('state', 'Tarea creada correctamente.');
     }
 
     /**
