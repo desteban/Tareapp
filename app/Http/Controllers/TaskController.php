@@ -14,7 +14,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $usuario = $request->user();
-        $tasks = $usuario->tasks()->orderBy('created_at', 'desc')->paginate(5);
+        $tasks = $usuario->tasks()->orderBy('created_at', 'desc')->paginate(10);
 
         // dd($tasks['currentPage']);
 
@@ -65,6 +65,10 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
 
+        if (empty($task)) {
+            abort(404);
+        }
+
         return view('task-show', ['task' => $task]);
     }
 
@@ -108,8 +112,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('task.index')->with('state','Tarea Eliminada');
     }
 }
